@@ -211,17 +211,6 @@ function Workouts() {
             <PageHeader>
                 <Box>
                     <Typography
-                        variant="h4"
-                        sx={{
-                            fontWeight: 700,
-                            letterSpacing: "-0.5px",
-                            color: COLORS.text,
-                        }}
-                    >
-                        Workouts
-                    </Typography>
-
-                    <Typography
                         variant="body2"
                         sx={{
                             color: COLORS.secondary,
