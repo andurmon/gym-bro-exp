@@ -80,13 +80,7 @@ export const ViewTitle = styled(MuiTypography)`
     letter-spacing: -0.5px;
     color: var(--text);
     transition: margin-left 0.3s;
-    ${({ theme, open }) => `${theme.breakpoints.up('md')} {
-        margin-left: ${open === "true" ? "var(--drawer-width)" : "50px"};
-    }`}
-
-    ${({ theme }) => `${theme.breakpoints.down('md')} {
-        margin-left: 0;
-    }`}
+    margin-left: ${open === "true" ? "var(--drawer-width)" : "50px"};
 `;
 
 export const DrawerStyled = styled(Drawer)`
