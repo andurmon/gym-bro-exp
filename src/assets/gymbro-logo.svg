@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-labelledby="title desc">
+  <title id="title">GymBro Logo</title>
+  <desc id="desc">Minimalist GymBro GB monogram with barbell and GYMBRO wordmark.</desc>
+  <rect width="1200" height="1200" fill="#0B1E2E"/>
+
+  <!-- GB monogram -->
+  <g transform="translate(0,30)">
+    <!-- G -->
+    <path d="M620 350 A190 190 0 1 0 620 650 L620 525 L535 525 L535 455 L700 455 L700 650 A300 300 0 1 1 620 350 Z"
+          fill="#EAF2F5"/>
+
+    <!-- B -->
+    <path d="M635 350 H755 C850 350 900 405 900 475 C900 515 883 548 852 570 C889 592 910 628 910 675 C910 748 850 800 755 800 H635 V350 Z
+             M715 425 V535 H750 C795 535 820 514 820 480 C820 445 795 425 750 425 Z
+             M715 605 V725 H758 C805 725 830 703 830 665 C830 628 805 605 758 605 Z"
+          fill="#FF6B4A" fill-rule="evenodd"/>
+
+    <!-- Barbell shaft -->
+    <rect x="390" y="548" width="420" height="54" rx="27" fill="#FF6B4A"/>
+
+    <!-- Left plates -->
+    <rect x="300" y="505" width="32" height="140" rx="8" fill="#FF6B4A"/>
+    <rect x="350" y="480" width="34" height="190" rx="8" fill="#FF6B4A"/>
+    <rect x="275" y="540" width="16" height="70" rx="6" fill="#FF6B4A"/>
+
+    <!-- Right plates -->
+    <rect x="816" y="480" width="34" height="190" rx="8" fill="#FF6B4A"/>
+    <rect x="866" y="505" width="32" height="140" rx="8" fill="#FF6B4A"/>
+    <rect x="909" y="540" width="16" height="70" rx="6" fill="#FF6B4A"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="600" y="930"
+        text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="112"
+        font-weight="700"
+        letter-spacing="18">
+    <tspan fill="#EAF2F5">GYM</tspan><tspan fill="#FF6B4A">BRO</tspan>
+  </text>
+</svg>
