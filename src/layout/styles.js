@@ -75,13 +75,23 @@ export const IconButtonStyled = styled(IconButton)`
     }
 `;
 
-export const ViewTitle = styled(MuiTypography)`
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    color: var(--text);
-    transition: margin-left 0.3s;
-    margin-left: ${open === "true" ? "var(--drawer-width)" : "50px"};
-`;
+export const ViewTitle = styled(MuiTypography)(({ theme, open }) => ({
+    fontWeight: 700,
+    letterSpacing: '-0.5px',
+    color: 'var(--text)',
+    transition: 'margin-left 0.3s', 
+
+    [theme.breakpoints.down('md')]: {
+        marginLeft: '50px',
+        // backgroundColor: 'red',
+    },
+
+    [theme.breakpoints.up('md')]: {
+        marginLeft: open ==="true" ? 'var(--drawer-width)' : '50px',
+        // backgroundColor: 'blue',
+    },
+}));
+
 
 export const DrawerStyled = styled(Drawer)`
     & .MuiDrawer-paper {
