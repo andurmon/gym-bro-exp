@@ -14,9 +14,9 @@ function AppRouter() {
         <Routes>
             <Route element={<AppLayout />}>
                 <Route index element={<Navigate to="/home" replace />} />
-                <Route path="home" element={<Home />} />
-                <Route path="workouts" element={<Workouts />} />
-                <Route path="exercises" element={<Exercises />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/workouts" element={<Workouts />} />
+                <Route path="/exercises" element={<Exercises />} />
             </Route>
         </Routes>
     );
