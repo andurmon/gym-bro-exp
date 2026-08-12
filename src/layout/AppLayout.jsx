@@ -1,11 +1,5 @@
 
-import {
-    AppBar,
-    Box,
-    Drawer,
-    List,
-    Toolbar,
-} from "@mui/material";
+import { AppBar, Drawer, List, Toolbar } from "@mui/material";
 
 import {
     Menu as MenuIcon,
@@ -17,10 +11,11 @@ import {
 import {
     NavLink,
     Outlet,
+    useLocation,
 } from "react-router-dom";
 
 import { useState } from "react";
-import { AppLayoutContainer, BoxPrimary, DrawerContent, LayoutListItemButton, LayoutListItemIcon, DrawerToolbar, Typography, LayoutListItemText, IconButtonStyled, ViewTitle } from "./styles";
+import { AppLayoutContainer, BoxPrimary, DrawerContent, LayoutListItemButton, LayoutListItemIcon, DrawerToolbar, Typography, LayoutListItemText, IconButtonStyled, ViewTitle, MainBox } from "./styles";
 
 // import Logo from "../assets/react.svg";
 
@@ -65,17 +60,15 @@ const navigationItems = [
 // -----------------------------------------------------------------------------
 
 function AppLayout() {
+    const location = useLocation();
     const [isDrawerOpen, setIsDrawerOpen] = useState(null);
-    const [viewLabel, setViewLabel] = useState("Home");
-    console.log('viewLabel: ', viewLabel);
+
+    const currentItem = navigationItems.find((item) => item.path === location.pathname);
+    const viewLabel = currentItem ? currentItem.label : "Home";
 
     const handleDrawerToggle = () => {
         setIsDrawerOpen((previous) => !previous);
     };
-
-    const handleNavLinkClick = (label) => {
-        setViewLabel(label)
-    }
 
     const drawerContent = (
         <DrawerContent>
@@ -91,8 +84,7 @@ function AppLayout() {
                 {navigationItems.map((item) => (
                     <NavLink
                         key={item.path}
-                        to={item.path}
-                        onClick={() => handleNavLinkClick(item.label)}
+                        to={item.path} 
                         style={{
                             textDecoration: "none",
                             color: "inherit",
@@ -136,14 +128,14 @@ function AppLayout() {
                 <Toolbar sx={{ backgroundColor: "var(--bg)" }}>
                     <IconButtonStyled
                         onClick={handleDrawerToggle}
-                        sx={{
-                            zIndex: (theme) =>
-                                theme.zIndex.drawer + 1
-                        }}
+                        // sx={{
+                        //     zIndex: (theme) =>
+                        //         theme.zIndex.drawer + 1
+                        // }}
                     >
                         <MenuIcon />
                     </IconButtonStyled>
-                    <ViewTitle variant="h4" open={String(isDrawerOpen)}>
+                    <ViewTitle variant="h4" open={String(isDrawerOpen)}>                        
                        {viewLabel}
                     </ViewTitle>
 
@@ -174,25 +166,9 @@ function AppLayout() {
             </AppBar>
 
             {/* Main content */}
-            <Box
-                component="main"
-                sx={{
-                    flexGrow: 1,
-                    width: {
-                        xs: "100%",
-                        md: `calc(100% - ${drawerWidth}px)`,
-                    },
-                    marginTop: "64px",
-                    marginLeft: {
-                        xs: 0,
-                        md: isDrawerOpen ? `${drawerWidth}px` : 0,
-                    },
-                    minWidth: 0,
-                    transition: "margin-left 0.3s",
-                }}
-            >
+            <MainBox component="main" open={String(isDrawerOpen)}>
                 <Outlet />
-            </Box>
+            </MainBox>
         </AppLayoutContainer>
     );
 }
