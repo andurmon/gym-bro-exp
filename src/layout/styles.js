@@ -101,17 +101,26 @@ export const DrawerStyled = styled(Drawer)`
         backgroundColor: COLORS.surface,
     }
 `
-// export const MainBox = styled(MuiBox)`
-//     flex-grow: 1,
-//                     width: {
-//                         xs: "100%",
-//                         md: `calc(100% - ${drawerWidth}px)`,
-//                     },
-//                     marginTop: "64px",
-//                     marginLeft: {
-//                         xs: 0,
-//                         md: isDrawerOpen ? `${drawerWidth}px` : 0,
-//                     },
-//                     minWidth: 0,
-//                     transition: "margin-left 0.3s",
-// `;
+
+export const MainBox = styled(MuiBox)(({theme,  open }) => ({
+    flexGrow: 1,
+    width: {
+        xs: "100%",
+        md: `calc(100% - var(--drawer-width))`,
+    },
+    marginTop: "64px",
+    [theme.breakpoints.down('md')]: {
+        marginLeft: '0',
+        width: '100%',
+        
+    },
+
+    [theme.breakpoints.up('md')]: {
+        marginLeft: open ==="true" ? 'var(--drawer-width)' : '0',
+        width: 'calc(100% - var(--drawer-width))',
+       
+    },
+
+    minWidth: 0,
+    transition: "margin-left 0.3s",
+}));
