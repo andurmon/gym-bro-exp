@@ -7,5 +7,5 @@ dotenv.config();
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [react()],
-    base: process.env.VITE_BASE_PATH || "read-vite-deploy"
+    base: process.env.VITE_BASE_PATH || "/read-vite-deploy"
 })
