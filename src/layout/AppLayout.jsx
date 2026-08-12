@@ -135,8 +135,7 @@ function AppLayout() {
                     >
                         <MenuIcon />
                     </IconButtonStyled>
-                    <ViewTitle variant="h4" open={String(isDrawerOpen)}>
-                        
+                    <ViewTitle variant="h4" open={String(isDrawerOpen)}>                        
                        {viewLabel}
                     </ViewTitle>
 
