@@ -17,20 +17,6 @@ import {
 import { useState } from "react";
 import { AppLayoutContainer, BoxPrimary, DrawerContent, LayoutListItemButton, LayoutListItemIcon, DrawerToolbar, Typography, LayoutListItemText, IconButtonStyled, ViewTitle, MainBox } from "./styles";
 
-// import Logo from "../assets/react.svg";
-
-// -----------------------------------------------------------------------------
-// Colors
-// -----------------------------------------------------------------------------
-
-const COLORS = {
-    background: "#0B1E2E",
-    surface: "#13324A",
-    primary: "#FF6B4A",
-    secondary: "#3E5A72",
-    text: "#EAF2F5",
-};
-
 const drawerWidth = 240;
 
 // -----------------------------------------------------------------------------
@@ -151,7 +137,7 @@ function AppLayout() {
                                 width: drawerWidth,
                                 boxSizing: "border-box",
                                 border: "none",
-                                backgroundColor: COLORS.surface,
+                                backgroundColor: 'var(--surface)',
                             },
                         }}
                     >
