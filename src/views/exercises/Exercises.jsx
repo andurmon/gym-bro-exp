@@ -25,30 +25,31 @@ import { useExercises } from "../../api/hooks/useExercises";
 import { useMuscleGroups } from "../../api/hooks/useMuscleGroups";
 import { filterExercises } from "./utils/filter-exercises";
 import { mapMuscleGroups } from "./utils/map-muscle-groups";
-
-const equipmentOptions = [
-  "All",
-  "Barbell",
-  "Dumbbell",
-  "Cable",
-  "Bodyweight",
-  "machine",
-];
+import { useEquipment } from "../../api/hooks/useEquipment";
+import { mapDropdownList } from "./utils/map-dropdown-list";
 
 function Exercises() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMuscleGroup, setActiveMuscleGroup] = useState("All");
-  console.log("activeMuscleGroup: ", activeMuscleGroup);
   const [activeEquipment, setActiveEquipment] = useState("All");
 
   const { useListAllMuscleGroups } = useMuscleGroups();
   const muscleGroupsResult = useListAllMuscleGroups();
 
   const muscleGroups = useMemo(
-    () => ["All", ...mapMuscleGroups(muscleGroupsResult?.data)],
+    () => ["All", ...mapDropdownList(muscleGroupsResult?.data)],
     [muscleGroupsResult?.data],
   );
   console.log("muscleGroups: ", muscleGroups);
+
+  const { useListAllEquipment } = useEquipment();
+  const equipmentResult = useListAllEquipment();
+  console.log("equipmentResult: ", equipmentResult);
+
+  const equipmentOptions = useMemo(
+    () => ["All", ...mapDropdownList(equipmentResult?.data)],
+    [equipmentResult?.data],
+  );
 
   const { useListAllExercises } = useExercises();
   const queryResult = useListAllExercises();
@@ -65,7 +66,6 @@ function Exercises() {
       ),
     [exerciseData, searchQuery, activeMuscleGroup, activeEquipment],
   );
-  console.log("filteredExercises: ", filteredExercises);
 
   const groupedExercises = useMemo(() => {
     return filteredExercises.reduce((groups, exercise) => {
@@ -77,15 +77,11 @@ function Exercises() {
       return groups;
     }, {});
   }, [filteredExercises]);
-  console.log("groupedExercises: ", groupedExercises);
 
   return (
     <PageContainer>
       <Stack spacing={3}>
         <Box>
-          <Typography variant="h4" gutterBottom>
-            Exercises
-          </Typography>
           <Typography variant="body1" color="text.secondary">
             Browse exercises by muscle group, filter by equipment, and search
             the library.
