@@ -1,3 +1,5 @@
+import { ALL_OPTION } from "../../../commons/constants";
+
 /**
  *
  * @param {*} exerciseData
@@ -29,10 +31,10 @@ export const filterExercises = (
 
       const matchesSearch = searchTarget.includes(searchQuery.toLowerCase());
       const matchesGroup =
-        activeMuscleGroup === "All" ||
+        activeMuscleGroup === ALL_OPTION ||
         exercise?.muscleGroups?.name === activeMuscleGroup;
       const matchesEquipment =
-        activeEquipment === "All" ||
+        activeEquipment === ALL_OPTION ||
         exercise?.equipment?.name === activeEquipment;
 
       return matchesSearch && matchesGroup && matchesEquipment;
