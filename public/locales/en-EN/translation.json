@@ -8,6 +8,7 @@
   "equipment": "Equipment",
 
   "exercises_view": {
+    "add_exercise": "Add Exercise",
     "description": "Browse exercises by muscle group, filter by equipment, and search the library.",
     "search_field_label": "Search Exercises...",
     "filter_muscle_group": "Filter by muscle group",
@@ -21,7 +22,7 @@
   },
 
   "english": "English",
-  "spanish": "spanish",
+  "spanish": "Spanish",
 
   "bands": "Bands",
   "body-weight": "Own body weight",

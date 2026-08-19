@@ -8,6 +8,7 @@
   "equipment": "Equipamiento",
 
   "exercises_view": {
+    "add_exercise": "Agregar Exercise",
     "description": "Explora ejercicios por grupo muscular, filtra por equipamiento y busca en la biblioteca.",
     "search_field_label": "Buscar ejercicios...",
     "filter_muscle_group": "Filtrar por grupo muscular",
