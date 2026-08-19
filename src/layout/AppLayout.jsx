@@ -1,4 +1,4 @@
-import { AppBar, Drawer, List, Toolbar } from "@mui/material";
+import { AppBar, Button, Drawer, List, Toolbar } from "@mui/material";
 
 import {
   Menu as MenuIcon,
@@ -49,7 +49,7 @@ const navigationItems = [
 
 function AppLayout() {
   const location = useLocation();
-  const { translate } = useTranslate();
+  const { language, toggleLanguage, translate } = useTranslate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(null);
 
   const currentItem = navigationItems.find(
@@ -82,9 +82,10 @@ function AppLayout() {
               textDecoration: "none",
               color: "inherit",
             }}
-            // onClick={() => {
-            //   setIsDrawerOpen(false);
-            // }}
+            onClick={() => {
+              //! TODO The animation kind of breaks with this
+              setIsDrawerOpen(false);
+            }}
           >
             {({ isActive }) => (
               <S.LayoutListItemButton
@@ -124,23 +125,24 @@ function AppLayout() {
   return (
     <S.AppLayoutContainer>
       <AppBar position="fixed">
-        {/* Mobile hamburger */}
         <Toolbar sx={{ backgroundColor: "var(--bg)" }}>
-          <S.IconButtonStyled
-            onClick={handleDrawerToggle}
-            // sx={{
-            //     zIndex: (theme) =>
-            //         theme.zIndex.drawer + 1
-            // }}
-          >
+          <S.IconButtonStyled onClick={handleDrawerToggle}>
             <MenuIcon />
           </S.IconButtonStyled>
+
           <S.ViewTitle variant="h4" open={String(isDrawerOpen)}>
             {viewLabel}
           </S.ViewTitle>
 
+          <Button
+            color="inherit"
+            onClick={() => toggleLanguage(language === "en" ? "es" : "en")}
+            sx={{ ml: "auto" }}
+          >
+            {language === "en" ? translate("spanish") : translate("english")}
+          </Button>
+
           <Drawer
-            // variant="permanent"
             open={isDrawerOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
@@ -155,11 +157,6 @@ function AppLayout() {
               },
             }}
           >
-            {/* <DrawerHeader>
-                            <IconButton onClick={handleDrawerClose}>
-                                {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                            </IconButton>
-                        </DrawerHeader> */}
             {drawerContent}
           </Drawer>
         </Toolbar>
