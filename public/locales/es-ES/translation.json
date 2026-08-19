@@ -1,0 +1,42 @@
+{
+  "home": "Inicio",
+  "workouts": "Entrenamientos",
+  "exercises": "Ejercicios",
+  "settings": "Ajustes",
+
+  "exercise": "Ejercicio",
+  "equipment": "Equipamiento",
+
+  "exercises_view": {
+    "description": "Explora ejercicios por grupo muscular, filtra por equipamiento y busca en la biblioteca.",
+    "search_field_label": "Buscar ejercicios...",
+    "filter_muscle_group": "Filtrar por grupo muscular",
+    "not_found": "No se encontraron ejercicios",
+    "not_found_suggestion": "Intenta ajustar tu búsqueda o tus filtros para ver más resultados"
+  },
+
+  "settings_view": {
+    "title": "Ajustes",
+    "language": "Idioma"
+  },
+
+  "english": "Inglés",
+  "spanish": "Español",
+
+  "bands": "Bandas",
+  "body-weight": "Peso corporal",
+  "dumbells": "Mancuernas",
+  "machine": "Máquina",
+
+  "abs": "Abdominales",
+  "back": "Espalda",
+  "biceps": "Bíceps",
+  "chest": "Pecho",
+  "forearms": "Antebrazos",
+  "glutes": "Glúteos",
+  "legs": "Piernas",
+  "shoulder": "Hombro",
+  "triceps": "Tríceps",
+
+  "all": "Todos"
+}

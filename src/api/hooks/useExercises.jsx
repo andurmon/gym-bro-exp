@@ -9,9 +9,7 @@ export const useExercises = () => {
       queryKey: ["exercises"],
       queryFn: exercisesAPI.listAllExercises,
     });
-    console.log("queryResult: ", queryResult);
     const data = queryResult?.data;
-    console.log("data: ", data);
     return { ...queryResult, data };
   };
 

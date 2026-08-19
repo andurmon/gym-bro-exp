@@ -1,21 +1,18 @@
-
 import { AppBar, Drawer, List, Toolbar } from "@mui/material";
 
 import {
-    Menu as MenuIcon,
-    Home as HomeIcon,
-    FitnessCenter as FitnessCenterIcon,
-    LibraryBooks as LibraryBooksIcon,
+  Menu as MenuIcon,
+  Home as HomeIcon,
+  FitnessCenter as FitnessCenterIcon,
+  LibraryBooks as LibraryBooksIcon,
+  Settings as SettingsIcon,
 } from "@mui/icons-material";
 
-import {
-    NavLink,
-    Outlet,
-    useLocation,
-} from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { useState } from "react";
-import { AppLayoutContainer, BoxPrimary, DrawerContent, LayoutListItemButton, LayoutListItemIcon, DrawerToolbar, Typography, LayoutListItemText, IconButtonStyled, ViewTitle, MainBox } from "./styles";
+import * as S from "./styles";
+import { useTranslate } from "../hooks/useTranslate";
 
 const drawerWidth = 240;
 
@@ -24,21 +21,26 @@ const drawerWidth = 240;
 // -----------------------------------------------------------------------------
 
 const navigationItems = [
-    {
-        label: "Home",
-        path: "/home",
-        icon: <HomeIcon />,
-    },
-    {
-        label: "Workouts",
-        path: "/workouts",
-        icon: <FitnessCenterIcon />,
-    },
-    {
-        label: "Exercises",
-        path: "/exercises",
-        icon: <LibraryBooksIcon />,
-    },
+  {
+    label: "home",
+    path: "/home",
+    icon: <HomeIcon />,
+  },
+  {
+    label: "workouts",
+    path: "/workouts",
+    icon: <FitnessCenterIcon />,
+  },
+  {
+    label: "exercises",
+    path: "/exercises",
+    icon: <LibraryBooksIcon />,
+  },
+  {
+    label: "settings",
+    path: "/settings",
+    icon: <SettingsIcon />,
+  },
 ];
 
 // -----------------------------------------------------------------------------
@@ -46,117 +48,129 @@ const navigationItems = [
 // -----------------------------------------------------------------------------
 
 function AppLayout() {
-    const location = useLocation();
-    const [isDrawerOpen, setIsDrawerOpen] = useState(null);
+  const location = useLocation();
+  const { translate } = useTranslate();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(null);
 
-    const currentItem = navigationItems.find((item) => item.path === location.pathname);
-    const viewLabel = currentItem ? currentItem.label : "Home";
+  const currentItem = navigationItems.find(
+    (item) => item.path === location.pathname,
+  );
+  const viewLabel = currentItem
+    ? translate(currentItem.label)
+    : translate("home");
 
-    const handleDrawerToggle = () => {
-        setIsDrawerOpen((previous) => !previous);
-    };
+  const handleDrawerToggle = () => {
+    setIsDrawerOpen((previous) => !previous);
+  };
 
-    const drawerContent = (
-        <DrawerContent>
-            <DrawerToolbar>
-                {/* <img src={Logo} alt="Logo" width={32} height={32} style={{ marginRight: 8 }} /> */}     
-                <Typography variant="h6">
-                    Gym
-                    <BoxPrimary component="span">Bro</BoxPrimary>
-                </Typography>
-            </DrawerToolbar>
+  const drawerContent = (
+    <S.DrawerContent>
+      <S.DrawerToolbar>
+        {/* <img src={Logo} alt="Logo" width={32} height={32} style={{ marginRight: 8 }} /> */}
+        <S.Typography variant="h6">
+          Gym
+          <S.BoxPrimary component="span">Bro</S.BoxPrimary>
+        </S.Typography>
+      </S.DrawerToolbar>
 
-            <List sx={{ px: 1.5 }}>
-                {navigationItems.map((item) => (
-                    <NavLink
-                        key={item.path}
-                        to={item.path} 
-                        style={{
-                            textDecoration: "none",
-                            color: "inherit",
-                        }}
-                    >
-                        {({ isActive }) => (
-                            <LayoutListItemButton active={String(isActive)} open={String(isDrawerOpen)}>
-                                <LayoutListItemIcon active={String(isActive)} open={String(isDrawerOpen)}>
-                                    {item.icon}
-                                </LayoutListItemIcon>
+      <List sx={{ px: 1.5 }}>
+        {navigationItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+            }}
+            // onClick={() => {
+            //   setIsDrawerOpen(false);
+            // }}
+          >
+            {({ isActive }) => (
+              <S.LayoutListItemButton
+                active={String(isActive)}
+                open={String(isDrawerOpen)}
+              >
+                <S.LayoutListItemIcon
+                  active={String(isActive)}
+                  open={String(isDrawerOpen)}
+                >
+                  {item.icon}
+                </S.LayoutListItemIcon>
 
-                                <LayoutListItemText
-                                    primary={item.label}
-                                    active={String(isActive)}
-                                    open={String(isDrawerOpen)}
-                                    // sx={{
-                                    //     fontWeight: isActive ? 600 : 400,
-                                    // }}
-                                    slotProps={{
-                                        primary: {
-                                            sx: {
-                                                fontWeight: isActive
-                                                    ? 600
-                                                    : 400,
-                                            },
-                                        },
-                                    }}
-                                />
-                            </LayoutListItemButton>
-                        )}
-                    </NavLink>
-                ))}
-            </List>
-        </DrawerContent>
-    );
+                <S.LayoutListItemText
+                  primary={translate(item.label)}
+                  active={String(isActive)}
+                  open={String(isDrawerOpen)}
+                  // sx={{
+                  //     fontWeight: isActive ? 600 : 400,
+                  // }}
+                  slotProps={{
+                    primary: {
+                      sx: {
+                        fontWeight: isActive ? 600 : 400,
+                      },
+                    },
+                  }}
+                />
+              </S.LayoutListItemButton>
+            )}
+          </NavLink>
+        ))}
+      </List>
+    </S.DrawerContent>
+  );
 
-    return (
-        <AppLayoutContainer> 
-            <AppBar position="fixed"> 
-                {/* Mobile hamburger */}
-                <Toolbar sx={{ backgroundColor: "var(--bg)" }}>
-                    <IconButtonStyled
-                        onClick={handleDrawerToggle}
-                        // sx={{
-                        //     zIndex: (theme) =>
-                        //         theme.zIndex.drawer + 1
-                        // }}
-                    >
-                        <MenuIcon />
-                    </IconButtonStyled>
-                    <ViewTitle variant="h4" open={String(isDrawerOpen)}>                        
-                       {viewLabel}
-                    </ViewTitle>
+  return (
+    <S.AppLayoutContainer>
+      <AppBar position="fixed">
+        {/* Mobile hamburger */}
+        <Toolbar sx={{ backgroundColor: "var(--bg)" }}>
+          <S.IconButtonStyled
+            onClick={handleDrawerToggle}
+            // sx={{
+            //     zIndex: (theme) =>
+            //         theme.zIndex.drawer + 1
+            // }}
+          >
+            <MenuIcon />
+          </S.IconButtonStyled>
+          <S.ViewTitle variant="h4" open={String(isDrawerOpen)}>
+            {viewLabel}
+          </S.ViewTitle>
 
-                    <Drawer
-                        // variant="permanent"
-                        open={isDrawerOpen}
-                        onClose={handleDrawerToggle}
-                        ModalProps={{
-                            keepMounted: true,
-                        }}
-                        sx={{
-                            "& .MuiDrawer-paper": {
-                                width: drawerWidth,
-                                boxSizing: "border-box",
-                                border: "none",
-                                backgroundColor: 'var(--surface)',
-                            },
-                        }}
-                    >
-                        {/* <DrawerHeader>
+          <Drawer
+            // variant="permanent"
+            open={isDrawerOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              "& .MuiDrawer-paper": {
+                width: drawerWidth,
+                boxSizing: "border-box",
+                border: "none",
+                backgroundColor: "var(--surface)",
+              },
+            }}
+          >
+            {/* <DrawerHeader>
                             <IconButton onClick={handleDrawerClose}>
                                 {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                             </IconButton>
                         </DrawerHeader> */}
-                        {drawerContent}
-                    </Drawer>
-                </Toolbar>
-            </AppBar>
+            {drawerContent}
+          </Drawer>
+        </Toolbar>
+      </AppBar>
 
-            {/* Main content */}
-            <MainBox component="main" open={String(isDrawerOpen)}>
-                <Outlet />
-            </MainBox>
-        </AppLayoutContainer>
-    );
+      {/* Main content */}
+      <S.MainBox component="main" open={String(isDrawerOpen)}>
+        <Outlet />
+      </S.MainBox>
+    </S.AppLayoutContainer>
+  );
 }
 
 export default AppLayout;
