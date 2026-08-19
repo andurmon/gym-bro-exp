@@ -14,10 +14,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Search as SearchIcon } from "@mui/icons-material";
+import { Search as SearchIcon, FitnessCenter } from "@mui/icons-material";
 import {
   ExerciseCard,
   ExerciseCardHeader,
+  ExerciseImage,
+  ExerciseImageContainer,
   PageContainer,
   SectionCard,
 } from "./styles";
@@ -25,30 +27,35 @@ import { useExercises } from "../../api/hooks/useExercises";
 import { useMuscleGroups } from "../../api/hooks/useMuscleGroups";
 import { filterExercises } from "./utils/filter-exercises";
 import { mapMuscleGroups } from "./utils/map-muscle-groups";
+import { useEquipment } from "../../api/hooks/useEquipment";
+import { mapDropdownList } from "../../commons/map-dropdown-list";
+import { ALL_OPTION } from "../../commons/constants";
 
-const equipmentOptions = [
-  "All",
-  "Barbell",
-  "Dumbbell",
-  "Cable",
-  "Bodyweight",
-  "machine",
-];
+import { useTranslation } from "react-i18next";
+import { useTranslate } from "../../hooks/useTranslate";
 
 function Exercises() {
+  const { translate, toggleLanguage } = useTranslate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeMuscleGroup, setActiveMuscleGroup] = useState("All");
-  console.log("activeMuscleGroup: ", activeMuscleGroup);
-  const [activeEquipment, setActiveEquipment] = useState("All");
+  const [activeMuscleGroup, setActiveMuscleGroup] = useState(ALL_OPTION);
+  const [activeEquipment, setActiveEquipment] = useState(ALL_OPTION);
 
   const { useListAllMuscleGroups } = useMuscleGroups();
   const muscleGroupsResult = useListAllMuscleGroups();
+  console.log("muscleGroupsResult: ", muscleGroupsResult);
 
   const muscleGroups = useMemo(
-    () => ["All", ...mapMuscleGroups(muscleGroupsResult?.data)],
+    () => [ALL_OPTION, ...mapDropdownList(muscleGroupsResult?.data)],
     [muscleGroupsResult?.data],
   );
-  console.log("muscleGroups: ", muscleGroups);
+
+  const { useListAllEquipment } = useEquipment();
+  const equipmentResult = useListAllEquipment();
+
+  const equipmentOptions = useMemo(
+    () => [ALL_OPTION, ...mapDropdownList(equipmentResult?.data)],
+    [equipmentResult?.data],
+  );
 
   const { useListAllExercises } = useExercises();
   const queryResult = useListAllExercises();
@@ -65,7 +72,6 @@ function Exercises() {
       ),
     [exerciseData, searchQuery, activeMuscleGroup, activeEquipment],
   );
-  console.log("filteredExercises: ", filteredExercises);
 
   const groupedExercises = useMemo(() => {
     return filteredExercises.reduce((groups, exercise) => {
@@ -77,18 +83,13 @@ function Exercises() {
       return groups;
     }, {});
   }, [filteredExercises]);
-  console.log("groupedExercises: ", groupedExercises);
 
   return (
     <PageContainer>
       <Stack spacing={3}>
         <Box>
-          <Typography variant="h4" gutterBottom>
-            Exercises
-          </Typography>
           <Typography variant="body1" color="text.secondary">
-            Browse exercises by muscle group, filter by equipment, and search
-            the library.
+            {translate("exercises_view.description")}
           </Typography>
         </Box>
 
@@ -104,7 +105,7 @@ function Exercises() {
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 fullWidth
-                placeholder="Search exercises..."
+                placeholder={translate("exercises_view.search_field_label")}
                 variant="outlined"
                 InputProps={{
                   startAdornment: (
@@ -128,7 +129,7 @@ function Exercises() {
                 <Select
                   labelId="equipment-filter-label"
                   value={activeEquipment}
-                  label="Equipment"
+                  label={translate("equipment")}
                   onChange={(event) => setActiveEquipment(event.target.value)}
                   sx={{
                     backgroundColor: "var(--bg)",
@@ -140,7 +141,7 @@ function Exercises() {
                 >
                   {equipmentOptions.map((option) => (
                     <MenuItem key={option} value={option}>
-                      {option}
+                      {translate(option)}
                     </MenuItem>
                   ))}
                 </Select>
@@ -151,13 +152,13 @@ function Exercises() {
 
             <Box>
               <Typography variant="subtitle2" gutterBottom>
-                Filter by muscle group
+                {translate("exercises_view.filter_muscle_group", "M")}
               </Typography>
               <Stack direction="row" flexWrap="wrap" gap={1}>
-                {muscleGroups.map((group) => (
+                {muscleGroups.map((group, index) => (
                   <Chip
-                    key={group}
-                    label={group}
+                    key={`${index}-${group}`}
+                    label={translate(group)}
                     variant={
                       activeMuscleGroup === group ? "filled" : "outlined"
                     }
@@ -176,9 +177,11 @@ function Exercises() {
 
         {filteredExercises.length === 0 ? (
           <SectionCard>
-            <Typography variant="h6">No exercises found</Typography>
+            <Typography variant="h6">
+              {translate("exercises_view.not_found")}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
-              Try adjusting your search or filters to see more results.
+              {translate("exercises_view.not_found_suggestion")}
             </Typography>
           </SectionCard>
         ) : (
@@ -193,9 +196,12 @@ function Exercises() {
                     mb={2}
                   >
                     <Box>
-                      <Typography variant="h6">{group}</Typography>
+                      <Typography variant="h6">{translate(group)}</Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {items.length} exercise{items.length > 1 ? "s" : ""}
+                        {items.length}{" "}
+                        {items.length > 1
+                          ? translate("exercises")
+                          : translate("exercise")}
                       </Typography>
                     </Box>
                   </Stack>
@@ -211,7 +217,7 @@ function Exercises() {
                                   variant="subtitle1"
                                   fontWeight={700}
                                 >
-                                  {exercise?.name}
+                                  {translate(exercise?.key ?? exercise?.name)}
                                 </Typography>
                                 <Typography
                                   variant="body2"
@@ -221,7 +227,10 @@ function Exercises() {
                                 </Typography>
                               </Box>
                               <Chip
-                                label={exercise?.equipment?.name}
+                                label={
+                                  translate(exercise?.equipment?.key) ??
+                                  exercise?.equipment?.name
+                                }
                                 size="small"
                                 sx={{
                                   backgroundColor: "var(--secondary)",
@@ -237,7 +246,18 @@ function Exercises() {
                             >
                               {exercise?.description}
                             </Typography>
-
+                            {exercise?.imageUrl ? (
+                              <ExerciseImage src={exercise?.imageUrl} alt="" />
+                            ) : (
+                              <ExerciseImageContainer>
+                                <FitnessCenter
+                                  sx={{
+                                    color: "var(--secondary)",
+                                    fontSize: 32,
+                                  }}
+                                />
+                              </ExerciseImageContainer>
+                            )}
                             <Stack direction="row" spacing={1} flexWrap="wrap">
                               <Chip
                                 label={exercise?.muscleGroups?.name}

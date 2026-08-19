@@ -1,6 +1,23 @@
 import { Box, Card, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+export const ExerciseImage = styled("img")(() => ({
+  borderRadius: 8,
+  width: 200,
+}));
+
+export const ExerciseImageContainer = styled(Box)(() => ({
+  width: 200,
+  height: 130,
+  borderRadius: 8,
+  backgroundColor: "var(--text)",
+  flexShrink: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  overflow: "hidden",
+}));
+
 export const PageContainer = styled(Box)(({ theme }) => ({
   minHeight: "100vh",
   backgroundColor: "var(--bg)",

@@ -1,0 +1,44 @@
+{
+  "home": "Home",
+  "workouts": "Workouts",
+  "exercises": "Exercises",
+  "settings": "Settings",
+
+  "exercise": "Exercise",
+  "equipment": "Equipment",
+
+  "exercises_view": {
+    "description": "Browse exercises by muscle group, filter by equipment, and search the library.",
+    "search_field_label": "Search Exercises...",
+    "filter_muscle_group": "Filter by muscle group",
+    "not_found": "No exercises found",
+    "not_found_suggestion": "Try adjusting your search or filters to see more results"
+  },
+
+  "settings_view": {
+    "title": "Settings",
+    "language": "Language"
+  },
+
+  "english": "English",
+  "spanish": "spanish",
+
+  "bands": "Bands",
+  "body-weight": "Own body weight",
+  "dumbells": "Dumbells",
+  "machine": "Machine",
+
+  "abs": "Abs",
+  "back": "Back",
+  "biceps": "Biceps",
+  "chest": "Chest",
+  "forearms": "Forearms",
+  "glutes": "Glutes",
+  "legs": "Legs",
+  "shoulder": "Shoulder",
+  "triceps": "Triceps",
+
+  "standing_bicep_curl_supinated": "Bicep Curl",
+
+  "all": "All"
+}
