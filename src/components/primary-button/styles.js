@@ -21,5 +21,5 @@ export const Fab = styled(MuiFab)(({ theme }) => ({
   backgroundColor: "var(--primary)",
   color: "var(--text)",
   "&:hover": { backgroundColor: "#E85C3F" },
-  zIndex: 1300,
+  zIndex: 1,
 }));

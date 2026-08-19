@@ -30,12 +30,15 @@ import { useTranslate } from "../../hooks/useTranslate";
 import { MuscleGroupsChips } from "./components/muscle-groups-chips/MuscleGroupsChips";
 import PrimaryButton from "../../components/primary-button/PrimaryButton";
 import ExercisesGroupDisplay from "./components/exercises-group-display/ExercisesGroupDisplay";
+import ExercisesDialog from "./components/exercise-dialog/ExercisesDialog";
 
 function Exercises() {
   const { translate, toggleLanguage } = useTranslate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMuscleGroup, setActiveMuscleGroup] = useState(ALL_OPTION);
   const [activeEquipment, setActiveEquipment] = useState(ALL_OPTION);
+
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
 
   const { useListAllMuscleGroups } = useMuscleGroups();
   const muscleGroupsResult = useListAllMuscleGroups();
@@ -87,7 +90,10 @@ function Exercises() {
           <Typography variant="body1" color="text.secondary">
             {translate("exercises_view.description")}
           </Typography>
-          <PrimaryButton startIcon={<Add />}>
+          <PrimaryButton
+            startIcon={<Add />}
+            onClick={() => setOpenCreateDialog(true)}
+          >
             {translate("exercises_view.add_exercise")}
           </PrimaryButton>
         </S.PageHeader>
@@ -151,6 +157,11 @@ function Exercises() {
             />
           </Stack>
         </S.SectionCard>
+
+        <ExercisesDialog
+          open={openCreateDialog}
+          onClose={() => setOpenCreateDialog(false)}
+        />
 
         {filteredExercises.length === 0 ? (
           <S.SectionCard>
