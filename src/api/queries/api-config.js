@@ -1,12 +1,26 @@
+const GYM_BRO_SERVICE = import.meta.env.VITE_GYM_BRO_SERVICE;
+const GYM_API_KEY = import.meta.env.VITE_GYM_API_KEY;
+
+/**
+ *
+ * @param {*} method
+ * @param {*} domain
+ * @param {*} data
+ * @returns
+ */
 export const getApiConfig = (method, domain, data = {}) => {
-  if (domain === undefined) throw new Error("Domain not found");
+  if (!domain) throw new Error("Domain not found");
+  if (!GYM_BRO_SERVICE || !GYM_API_KEY) {
+    console.error("Supabase environment variables are missing");
+    throw new Error("Supabase environment variables are missing");
+  }
 
   return {
     method,
-    url: `https://wfzjvttkycxqxbpyukba.supabase.co/functions/v1/${domain}`,
+    url: `${GYM_BRO_SERVICE}/${domain}`,
     headers: {
-      Authorization: "Bearer sb_publishable_Ie30z4Mr4jaUf20c3_mDmA_g-gi9UH6",
-      apikey: "sb_publishable_Ie30z4Mr4jaUf20c3_mDmA_g-gi9UH6",
+      Authorization: `Bearer ${GYM_API_KEY}`,
+      apikey: GYM_API_KEY,
       "Content-Type": "application/json",
     },
     ...(data && { data }),
