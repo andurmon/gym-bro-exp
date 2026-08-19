@@ -15,8 +15,10 @@ import {
     Paper,
     Stack,
     Typography,
+    Fab,
+    useMediaQuery,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 
 // -----------------------------------------------------------------------------
 // Colors
@@ -58,7 +60,7 @@ const PageHeader = styled(Box)(({ theme }) => ({
     },
 }));
 
-const PrimaryButton = styled(Button)(() => ({
+const StyledPrimaryButton = styled(Button)(() => ({
     backgroundColor: COLORS.primary,
     color: COLORS.text,
     fontWeight: 700,
@@ -70,6 +72,37 @@ const PrimaryButton = styled(Button)(() => ({
         backgroundColor: "#E85C3F",
     },
 }));
+
+function PrimaryButton({ startIcon, children, ...rest }) {
+    const theme = useTheme();
+    const mdUp = useMediaQuery(theme.breakpoints.up("md"));
+
+    if (mdUp) {
+        return (
+            <StyledPrimaryButton startIcon={startIcon} {...rest}>
+                {children}
+            </StyledPrimaryButton>
+        );
+    }
+
+    return (
+        <Fab
+            aria-label="create"
+            sx={{
+                position: "fixed",
+                right: 16,
+                bottom: 16,
+                backgroundColor: COLORS.primary,
+                color: COLORS.text,
+                "&:hover": { backgroundColor: "#E85C3F" },
+                zIndex: 1300,
+            }}
+            {...rest}
+        >
+            {startIcon}
+        </Fab>
+    );
+}
 
 const WeekContainer = styled(Box)(({ theme }) => ({
     display: "grid",

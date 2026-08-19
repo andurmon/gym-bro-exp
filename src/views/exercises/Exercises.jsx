@@ -13,8 +13,11 @@ import {
   Stack,
   TextField,
   Typography,
+  Button,
+  Fab,
+  useMediaQuery,
 } from "@mui/material";
-import { Search as SearchIcon, FitnessCenter } from "@mui/icons-material";
+import { Search as SearchIcon, FitnessCenter, Add } from "@mui/icons-material";
 import {
   ExerciseCard,
   ExerciseCardHeader,
@@ -33,12 +36,18 @@ import { ALL_OPTION } from "../../commons/constants";
 
 import { useTranslation } from "react-i18next";
 import { useTranslate } from "../../hooks/useTranslate";
+import { useTheme } from "@mui/material/styles";
+import ExercisesDialog from "./exercises-dialog/ExercisesDialog";
 
 function Exercises() {
   const { translate, toggleLanguage } = useTranslate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMuscleGroup, setActiveMuscleGroup] = useState(ALL_OPTION);
   const [activeEquipment, setActiveEquipment] = useState(ALL_OPTION);
+
+  const theme = useTheme();
+  const mdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
 
   const { useListAllMuscleGroups } = useMuscleGroups();
   const muscleGroupsResult = useListAllMuscleGroups();
@@ -146,6 +155,19 @@ function Exercises() {
                   ))}
                 </Select>
               </FormControl>
+
+              <Box>
+                {mdUp ? (
+                  <Button
+                    variant="contained"
+                    startIcon={<Add />}
+                    onClick={() => setOpenCreateDialog(true)}
+                    sx={{ textTransform: "none" }}
+                  >
+                    Add Exercise
+                  </Button>
+                ) : null}
+              </Box>
             </Stack>
 
             <Divider sx={{ borderColor: "var(--secondary)" }} />
@@ -174,6 +196,25 @@ function Exercises() {
             </Box>
           </Stack>
         </SectionCard>
+
+        {!mdUp && (
+          <Fab
+            onClick={() => setOpenCreateDialog(true)}
+            sx={{
+              position: "fixed",
+              right: 16,
+              bottom: 16,
+              zIndex: 1300,
+              backgroundColor: "var(--primary)",
+              color: "var(--text)",
+              "&:hover": { backgroundColor: "#E85C3F" },
+            }}
+          >
+            <Add />
+          </Fab>
+        )}
+
+        <ExercisesDialog open={openCreateDialog} onClose={() => setOpenCreateDialog(false)} />
 
         {filteredExercises.length === 0 ? (
           <SectionCard>
