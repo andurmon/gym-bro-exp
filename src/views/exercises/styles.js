@@ -1,21 +1,25 @@
-import { Box, Card, Paper } from "@mui/material";
+import { Box, Card, Paper, Select } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const ExerciseImage = styled("img")(() => ({
-  borderRadius: 8,
-  width: 200,
+export const SelectEquipment = styled(Select)(() => ({
+  backgroundColor: "var(--bg)",
+  color: "var(--text)",
+  borderRadius: 2,
+  ".MuiSvgIcon-root": { color: "var(--text)" },
+  fieldset: { borderColor: "var(--secondary)" },
 }));
 
-export const ExerciseImageContainer = styled(Box)(() => ({
-  width: 200,
-  height: 130,
-  borderRadius: 8,
-  backgroundColor: "var(--text)",
-  flexShrink: 0,
+export const PageHeader = styled(Box)(({ theme }) => ({
   display: "flex",
+  justifyContent: "space-between",
   alignItems: "center",
-  justifyContent: "center",
-  overflow: "hidden",
+  marginBottom: theme.spacing(4),
+
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: theme.spacing(2),
+  },
 }));
 
 export const PageContainer = styled(Box)(({ theme }) => ({
@@ -33,20 +37,4 @@ export const SectionCard = styled(Paper)(() => ({
   border: `1px solid var(--secondary)`,
   borderRadius: 16,
   padding: 20,
-}));
-
-export const ExerciseCard = styled(Card)(() => ({
-  backgroundColor: "var(--bg)",
-  color: "var(--text)",
-  border: `1px solid var(--secondary)`,
-  borderRadius: 14,
-  boxShadow: "none",
-  height: "100%",
-}));
-
-export const ExerciseCardHeader = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  marginBottom: 12,
 }));

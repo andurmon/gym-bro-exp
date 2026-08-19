@@ -4,6 +4,7 @@ import {
   CardContent,
   Chip,
   Divider,
+  Fab,
   FormControl,
   Grid,
   InputAdornment,
@@ -14,15 +15,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Search as SearchIcon, FitnessCenter } from "@mui/icons-material";
-import {
-  ExerciseCard,
-  ExerciseCardHeader,
-  ExerciseImage,
-  ExerciseImageContainer,
-  PageContainer,
-  SectionCard,
-} from "./styles";
+import { Search as SearchIcon, FitnessCenter, Add } from "@mui/icons-material";
+import * as S from "./styles";
 import { useExercises } from "../../api/hooks/useExercises";
 import { useMuscleGroups } from "../../api/hooks/useMuscleGroups";
 import { filterExercises } from "./utils/filter-exercises";
@@ -33,6 +27,9 @@ import { ALL_OPTION } from "../../commons/constants";
 
 import { useTranslation } from "react-i18next";
 import { useTranslate } from "../../hooks/useTranslate";
+import { MuscleGroupsChips } from "./components/muscle-groups-chips/MuscleGroupsChips";
+import PrimaryButton from "../../components/primary-button/PrimaryButton";
+import ExercisesGroupDisplay from "./components/exercises-group-display/ExercisesGroupDisplay";
 
 function Exercises() {
   const { translate, toggleLanguage } = useTranslate();
@@ -42,7 +39,6 @@ function Exercises() {
 
   const { useListAllMuscleGroups } = useMuscleGroups();
   const muscleGroupsResult = useListAllMuscleGroups();
-  console.log("muscleGroupsResult: ", muscleGroupsResult);
 
   const muscleGroups = useMemo(
     () => [ALL_OPTION, ...mapDropdownList(muscleGroupsResult?.data)],
@@ -85,15 +81,18 @@ function Exercises() {
   }, [filteredExercises]);
 
   return (
-    <PageContainer>
+    <S.PageContainer>
       <Stack spacing={3}>
-        <Box>
+        <S.PageHeader>
           <Typography variant="body1" color="text.secondary">
             {translate("exercises_view.description")}
           </Typography>
-        </Box>
+          <PrimaryButton startIcon={<Add />}>
+            {translate("exercises_view.add_exercise")}
+          </PrimaryButton>
+        </S.PageHeader>
 
-        <SectionCard>
+        <S.SectionCard>
           <Stack spacing={2}>
             <Stack
               direction={{ xs: "column", sm: "row" }}
@@ -125,161 +124,50 @@ function Exercises() {
               <FormControl
                 sx={{ minWidth: 180, width: { xs: "100%", sm: "auto" } }}
               >
-                <InputLabel id="equipment-filter-label">Equipment</InputLabel>
-                <Select
+                <InputLabel id="equipment-filter-label">
+                  {translate("equipment")}
+                </InputLabel>
+                <S.SelectEquipment
                   labelId="equipment-filter-label"
                   value={activeEquipment}
                   label={translate("equipment")}
                   onChange={(event) => setActiveEquipment(event.target.value)}
-                  sx={{
-                    backgroundColor: "var(--bg)",
-                    color: "var(--text)",
-                    borderRadius: 2,
-                    ".MuiSvgIcon-root": { color: "var(--text)" },
-                    fieldset: { borderColor: "var(--secondary)" },
-                  }}
                 >
                   {equipmentOptions.map((option) => (
                     <MenuItem key={option} value={option}>
                       {translate(option)}
                     </MenuItem>
                   ))}
-                </Select>
+                </S.SelectEquipment>
               </FormControl>
             </Stack>
 
             <Divider sx={{ borderColor: "var(--secondary)" }} />
 
-            <Box>
-              <Typography variant="subtitle2" gutterBottom>
-                {translate("exercises_view.filter_muscle_group", "M")}
-              </Typography>
-              <Stack direction="row" flexWrap="wrap" gap={1}>
-                {muscleGroups.map((group, index) => (
-                  <Chip
-                    key={`${index}-${group}`}
-                    label={translate(group)}
-                    variant={
-                      activeMuscleGroup === group ? "filled" : "outlined"
-                    }
-                    color={activeMuscleGroup === group ? "primary" : "default"}
-                    onClick={() => setActiveMuscleGroup(group)}
-                    sx={{
-                      color: "var(--text)",
-                      borderColor: "var(--secondary)",
-                    }}
-                  />
-                ))}
-              </Stack>
-            </Box>
+            <MuscleGroupsChips
+              activeMuscleGroup={activeMuscleGroup}
+              muscleGroups={muscleGroups}
+              setActiveMuscleGroup={setActiveMuscleGroup}
+            />
           </Stack>
-        </SectionCard>
+        </S.SectionCard>
 
         {filteredExercises.length === 0 ? (
-          <SectionCard>
+          <S.SectionCard>
             <Typography variant="h6">
               {translate("exercises_view.not_found")}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {translate("exercises_view.not_found_suggestion")}
             </Typography>
-          </SectionCard>
+          </S.SectionCard>
         ) : (
           Object.entries(groupedExercises).map(([group, items]) => (
-            <>
-              <Box key={group}>
-                <SectionCard>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    mb={2}
-                  >
-                    <Box>
-                      <Typography variant="h6">{translate(group)}</Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {items.length}{" "}
-                        {items.length > 1
-                          ? translate("exercises")
-                          : translate("exercise")}
-                      </Typography>
-                    </Box>
-                  </Stack>
-
-                  <Grid container spacing={2}>
-                    {items.map((exercise) => (
-                      <Grid item xs={12} sm={6} md={4} key={exercise.id}>
-                        <ExerciseCard>
-                          <CardContent>
-                            <ExerciseCardHeader>
-                              <Box>
-                                <Typography
-                                  variant="subtitle1"
-                                  fontWeight={700}
-                                >
-                                  {translate(exercise?.key ?? exercise?.name)}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  color="text.secondary"
-                                >
-                                  {exercise?.category}
-                                </Typography>
-                              </Box>
-                              <Chip
-                                label={
-                                  translate(exercise?.equipment?.key) ??
-                                  exercise?.equipment?.name
-                                }
-                                size="small"
-                                sx={{
-                                  backgroundColor: "var(--secondary)",
-                                  color: "var(--text)",
-                                }}
-                              />
-                            </ExerciseCardHeader>
-
-                            <Typography
-                              variant="body2"
-                              color="text.secondary"
-                              mb={2}
-                            >
-                              {exercise?.description}
-                            </Typography>
-                            {exercise?.imageUrl ? (
-                              <ExerciseImage src={exercise?.imageUrl} alt="" />
-                            ) : (
-                              <ExerciseImageContainer>
-                                <FitnessCenter
-                                  sx={{
-                                    color: "var(--secondary)",
-                                    fontSize: 32,
-                                  }}
-                                />
-                              </ExerciseImageContainer>
-                            )}
-                            <Stack direction="row" spacing={1} flexWrap="wrap">
-                              <Chip
-                                label={exercise?.muscleGroups?.name}
-                                size="small"
-                                sx={{
-                                  backgroundColor: "var(--primary)",
-                                  color: "var(--text)",
-                                }}
-                              />
-                            </Stack>
-                          </CardContent>
-                        </ExerciseCard>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </SectionCard>
-              </Box>
-            </>
+            <ExercisesGroupDisplay key={group} group={group} items={items} />
           ))
         )}
       </Stack>
-    </PageContainer>
+    </S.PageContainer>
   );
 }
 
