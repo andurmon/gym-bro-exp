@@ -25,12 +25,12 @@ import { useEquipment } from "../../api/hooks/useEquipment";
 import { mapDropdownList } from "../../commons/map-dropdown-list";
 import { ALL_OPTION } from "../../commons/constants";
 
-import { useTranslation } from "react-i18next";
 import { useTranslate } from "../../hooks/useTranslate";
 import { MuscleGroupsChips } from "./components/muscle-groups-chips/MuscleGroupsChips";
 import PrimaryButton from "../../components/primary-button/PrimaryButton";
 import ExercisesGroupDisplay from "./components/exercises-group-display/ExercisesGroupDisplay";
 import ExercisesDialog from "./components/exercise-dialog/ExercisesDialog";
+import { ADD_MODE } from "./constants";
 
 function Exercises() {
   const { translate, toggleLanguage } = useTranslate();
@@ -159,6 +159,7 @@ function Exercises() {
         </S.SectionCard>
 
         <ExercisesDialog
+          mode={ADD_MODE}
           open={openCreateDialog}
           onClose={() => setOpenCreateDialog(false)}
         />

@@ -4,11 +4,20 @@
   "exercises": "Ejercicios",
   "settings": "Ajustes",
 
+  "create": "Crear",
+  "cancel": "Cancelar",
+  "name": "Nombre",
+  "description": "Descripción",
+  "category": "Categoría",
+  "add_new_exercise": "Agregar nuevo ejercicio",
+  "edit_exercise": "Editar ejercicio",
+
   "exercise": "Ejercicio",
   "equipment": "Equipamiento",
+  "muscle-group": "Grupo Muscular",
 
   "exercises_view": {
-    "add_exercise": "Agregar Exercise",
+    "add_exercise": "Agregar ejercicio",
     "description": "Explora ejercicios por grupo muscular, filtra por equipamiento y busca en la biblioteca.",
     "search_field_label": "Buscar ejercicios...",
     "filter_muscle_group": "Filtrar por grupo muscular",
