@@ -5,6 +5,7 @@ import Workouts from "./views/workouts/Workouts";
 import Exercises from "./views/exercises/Exercises";
 import AppLayout from "./layout/AppLayout";
 import Settings from "./views/settings/Settings";
+import Roullete from "./views/roullete/Roullete";
 
 function AppRouter() {
   return (
@@ -13,6 +14,7 @@ function AppRouter() {
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<Home />} />
         <Route path="/workouts" element={<Workouts />} />
+        <Route path="/roullete" element={<Roullete />} />
         <Route path="/exercises" element={<Exercises />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
