@@ -9,13 +9,11 @@ import { useTranslation } from "react-i18next";
  * }} An object containing language-switching and translation utilities.
  */
 const useTranslate = () => {
-  const { t, i18n } = useTranslation();
+  const { t: translate, i18n } = useTranslation();
 
   const toggleLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-
-  const translate = (key = "", ...rest) => t(key, ...rest);
 
   return { language: i18n?.language, toggleLanguage, translate };
 };

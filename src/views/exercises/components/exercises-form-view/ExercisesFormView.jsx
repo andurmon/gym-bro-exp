@@ -1,116 +1,44 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
+import { Formik, Form, Field } from "formik";
+import ExercisesForm from "./components/ExercisesForm";
+import { useTranslate } from "../../../../hooks/useTranslate";
 
 const ExercisesFormView = ({
-  setName,
-  setCategory,
-  name,
-  category,
-  muscleGroupId,
-  setMuscleGroupId,
+  formConfig = {},
   muscleGroupsResult,
-  equipmentId,
-  setEquipmentId,
   equipmentResult,
-  description,
-  setDescription,
-  onClose,
-  submitting,
-  onChange,
-  onClick,
-  handleCreate,
+  handleClose,
 }) => {
+  const { translate } = useTranslate();
+  const { mode, handleSubmit, initialValues } = formConfig || {};
+
   return (
-    <Box sx={{ p: 2, height: "100%", boxSizing: "border-box" }}>
-      <Stack spacing={2} sx={{ height: "100%" }}>
-        <Box>
-          <Typography variant="h6">Add New Exercise</Typography>
-        </Box>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      {({ handleSubmit, isSubmitting, values }) => (
+        <>
+          <Form>
+            <ExercisesForm
+              mode={mode}
+              equipmentResult={equipmentResult}
+              muscleGroupsResult={muscleGroupsResult}
+            />
+            <Stack direction="row" spacing={1} justifyContent="flex-end">
+              <Button onClick={handleClose} disabled={isSubmitting}>
+                {translate("cancel")}
+              </Button>
 
-        <TextField
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          fullWidth
-        />
-
-        <TextField
-          label="Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          fullWidth
-        />
-
-        <FormControl fullWidth>
-          <InputLabel id="muscle-group-label">Muscle Group</InputLabel>
-          <Select
-            labelId="muscle-group-label"
-            value={muscleGroupId}
-            label="Muscle Group"
-            onChange={(e) => setMuscleGroupId(e.target.value)}
-          >
-            <MenuItem value="">None</MenuItem>
-            {(muscleGroupsResult?.data || []).map((mg) => (
-              <MenuItem key={mg.id} value={mg.id}>
-                {mg.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth>
-          <InputLabel id="equipment-label">Equipment</InputLabel>
-          <Select
-            labelId="equipment-label"
-            value={equipmentId}
-            label="Equipment"
-            onChange={(e) => setEquipmentId(e.target.value)}
-          >
-            <MenuItem value="">None</MenuItem>
-            {(equipmentResult?.data || []).map((eq) => (
-              <MenuItem key={eq.id} value={eq.id}>
-                {eq.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <TextField
-          label="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          fullWidth
-          multiline
-          rows={4}
-        />
-
-        <Box sx={{ flex: 1 }} />
-
-        <Stack direction="row" spacing={1} justifyContent="flex-end">
-          <Button onClick={onClose} disabled={submitting}>
-            Cancel
-          </Button>
-
-          <Button
-            variant="contained"
-            onClick={handleCreate}
-            disabled={submitting || !name.trim()}
-          >
-            {submitting ? <CircularProgress size={20} /> : "Create"}
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
+              <Button
+                variant="contained"
+                onClick={handleSubmit}
+                disabled={isSubmitting || !values?.name?.trim()}
+              >
+                {isSubmitting ? <CircularProgress size={20} /> : "Create"}
+              </Button>
+            </Stack>
+          </Form>
+        </>
+      )}
+    </Formik>
   );
 };
 

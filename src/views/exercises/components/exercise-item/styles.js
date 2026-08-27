@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 export const ExerciseImage = styled("img")(() => ({
   borderRadius: 8,
   width: 200,
+  cursor: "pointer",
 }));
 
 export const ExerciseImageContainer = styled(Box)(() => ({
