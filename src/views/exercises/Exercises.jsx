@@ -47,6 +47,7 @@ function Exercises() {
     () => [ALL_OPTION, ...mapDropdownList(muscleGroupsResult?.data)],
     [muscleGroupsResult?.data],
   );
+  console.log("muscleGroups: ", muscleGroups);
 
   const { useListAllEquipment } = useEquipment();
   const equipmentResult = useListAllEquipment();

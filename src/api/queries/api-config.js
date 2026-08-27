@@ -8,7 +8,7 @@ const GYM_API_KEY = import.meta.env.VITE_GYM_API_KEY;
  * @param {*} data
  * @returns
  */
-export const getApiConfig = (method, domain, data = {}) => {
+export const getApiConfig = (method, domain, data = {}, params = {}) => {
   if (!domain) throw new Error("Domain not found");
   if (!GYM_BRO_SERVICE || !GYM_API_KEY) {
     console.error("Supabase environment variables are missing");
@@ -24,5 +24,6 @@ export const getApiConfig = (method, domain, data = {}) => {
       "Content-Type": "application/json",
     },
     ...(data && { data }),
+    ...(params && { params }),
   };
 };
