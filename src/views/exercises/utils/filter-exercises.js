@@ -21,8 +21,10 @@ export const filterExercises = (
     ?.filter((exercise) => {
       const searchTarget = [
         exercise.name,
-        exercise.muscleGroup,
-        exercise.equipment,
+        exercise.muscleGroup?.key,
+        exercise.muscleGroup?.name,
+        exercise.equipment?.key,
+        exercise.equipment?.name,
         exercise.category,
         exercise.description,
       ]
@@ -30,12 +32,15 @@ export const filterExercises = (
         .toLowerCase();
 
       const matchesSearch = searchTarget.includes(searchQuery.toLowerCase());
+
+      const muscleGroup =
+        exercise?.muscleGroups?.key ?? exercise?.muscleGroups?.name;
+      const equipment = exercise?.equipment?.key ?? exercise?.equipment?.name;
+
       const matchesGroup =
-        activeMuscleGroup === ALL_OPTION ||
-        exercise?.muscleGroups?.name === activeMuscleGroup;
+        activeMuscleGroup === ALL_OPTION || muscleGroup === activeMuscleGroup;
       const matchesEquipment =
-        activeEquipment === ALL_OPTION ||
-        exercise?.equipment?.name === activeEquipment;
+        activeEquipment === ALL_OPTION || equipment === activeEquipment;
 
       return matchesSearch && matchesGroup && matchesEquipment;
     })

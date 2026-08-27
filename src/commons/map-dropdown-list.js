@@ -8,6 +8,6 @@ export const mapDropdownList = (list, key = "key") => {
     return [];
   }
   return list
-    .map((group) => group?.[key] || group?.name || group?.id || group)
+    .map((group) => group?.key || group?.name || group?.id || group)
     .filter(Boolean);
 };
