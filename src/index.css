@@ -1,38 +1,38 @@
 :root {
-    --text: #EAF2F5;
-    --text-h: #EAF2F5;
-    --bg: #0B1E2E;
-    --border: #3E5A72;
-    --secondary: #3E5A72;
-    --code-bg: #13324A;
-    --surface: #13324A;
-    --primary: #FF6B4A;
-    --accent: #FF6B4A;
-    --accent-bg: rgba(255, 107, 74, 0.12);
-    --accent-border: rgba(255, 107, 74, 0.5);
-    --social-bg: rgba(62, 90, 114, 0.25);
-    --shadow:
-        rgba(0, 0, 0, 0.35) 0 10px 15px -3px, rgba(0, 0, 0, 0.2) 0 4px 6px -2px;
+  --text: #eaf2f5;
+  --text-h: #eaf2f5;
+  --bg: #0b1e2e;
+  --border: #3e5a72;
+  --secondary: #3e5a72;
+  --code-bg: #13324a;
+  --surface: #13324a;
+  --primary: #ff6b4a;
+  --accent: #ff6b4a;
+  --accent-bg: rgba(255, 107, 74, 0.12);
+  --accent-border: rgba(255, 107, 74, 0.5);
+  --social-bg: rgba(62, 90, 114, 0.25);
+  --shadow:
+    rgba(0, 0, 0, 0.35) 0 10px 15px -3px, rgba(0, 0, 0, 0.2) 0 4px 6px -2px;
 
-    --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
-    --heading: 'Montserrat', system-ui, 'Segoe UI', Roboto, sans-serif;
-    --mono: ui-monospace, Consolas, monospace;
+  --sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: "Montserrat", system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
 
-    --drawer-width: 240px;
+  --drawer-width: 240px;
 
-    font: 18px/145% var(--sans);
-    letter-spacing: 0.18px;
-    color-scheme: dark;
-    color: var(--text);
-    background: var(--bg);
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-    @media (max-width: 1024px) {
-        font-size: 16px;
-    }
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
 }
 
 /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap'); */
@@ -59,29 +59,29 @@
 
 /* Global font rules */
 body {
-    font-family: var(--sans);
-    font-weight: 400;
+  font-family: var(--sans);
+  font-weight: 400;
 }
 
 h1 {
-    font-family: var(--heading);
-    font-weight: 800;
-    color: var(--text-h);
+  font-family: var(--heading);
+  font-weight: 800;
+  color: var(--text-h);
 }
 
 h2 {
-    font-family: var(--heading);
-    font-weight: 700;
-    color: var(--text-h);
+  font-family: var(--heading);
+  font-weight: 700;
+  color: var(--text-h);
 }
 
 h3,
 h4,
 h5,
 h6 {
-    font-family: var(--heading);
-    font-weight: 700;
-    color: var(--text-h);
+  font-family: var(--heading);
+  font-weight: 700;
+  color: var(--text-h);
 }
 
 /* Ensure UI elements use Inter */
@@ -93,12 +93,12 @@ label,
 button *,
 input *,
 textarea * {
-    font-family: var(--sans);
+  font-family: var(--sans);
 }
 
 /* MUI overrides to prefer Inter on buttons and inputs */
 .MuiButton-root,
 .MuiTypography-root,
 .MuiInputBase-root {
-    font-family: var(--sans) !important;
+  font-family: var(--sans) !important;
 }

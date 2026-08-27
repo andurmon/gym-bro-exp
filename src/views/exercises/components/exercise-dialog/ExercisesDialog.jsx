@@ -1,37 +1,25 @@
-import React, { useState } from "react";
 import {
-  Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   useMediaQuery,
-  Drawer,
   Box,
-  Stack,
   IconButton,
-  CircularProgress,
-  Typography,
-  SwipeableDrawer,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/material/styles";
 import { useEquipment } from "../../../../api/hooks/useEquipment";
-import { useExercises } from "../../../../api/hooks/useExercises";
 import { useMuscleGroups } from "../../../../api/hooks/useMuscleGroups";
 import ExercisesFormView from "../exercises-form-view/ExercisesFormView";
+import useFormConfig from "./useFormConfig";
+import { useTranslate } from "../../../../hooks/useTranslate";
+import { ADD_MODE } from "../../constants";
+import { Dialog, SwipeableDrawer } from "./styles";
 
-export default function ExercisesDialog({ open, onClose }) {
+export default function ExercisesDialog({ mode, open, onClose }) {
+  const { translate } = useTranslate();
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const { useCreateExercise } = useExercises();
-  const createMutation = useCreateExercise();
 
   const { useListAllMuscleGroups } = useMuscleGroups();
   const muscleGroupsResult = useListAllMuscleGroups();
@@ -39,60 +27,14 @@ export default function ExercisesDialog({ open, onClose }) {
   const { useListAllEquipment } = useEquipment();
   const equipmentResult = useListAllEquipment();
 
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [muscleGroupId, setMuscleGroupId] = useState("");
-  const [equipmentId, setEquipmentId] = useState("");
-  const [description, setDescription] = useState("");
+  const formConfig = useFormConfig({ mode, onClose });
 
-  const submitting = createMutation.isLoading;
-
-  const resetForm = () => {
-    setName("");
-    setCategory("");
-    setMuscleGroupId("");
-    setEquipmentId("");
-    setDescription("");
-  };
-
-  const handleCreate = async () => {
-    try {
-      // Build payload according to backend expectations. Adjust if backend requires different fields.
-      const payload = {
-        name: name.trim(),
-        category: category.trim() || undefined,
-        description: description.trim() || undefined,
-        muscleGroupId: muscleGroupId || undefined,
-        equipmentId: equipmentId || undefined,
-      };
-
-      await createMutation.mutateAsync(payload);
-
-      resetForm();
-      onClose();
-    } catch (err) {
-      // For now, let mutation handle error states. Could show a toast here.
-      console.error("Failed to create exercise", err);
-    }
-  };
-
-  const content = (
+  const formView = (
     <ExercisesFormView
-      setName={setName}
-      setCategory={setCategory}
-      name={name}
-      category={category}
-      muscleGroupId={muscleGroupId}
-      setMuscleGroupId={setMuscleGroupId}
+      formConfig={formConfig}
       muscleGroupsResult={muscleGroupsResult}
-      equipmentId={equipmentId}
-      setEquipmentId={setEquipmentId}
       equipmentResult={equipmentResult}
-      description={description}
-      setDescription={setDescription}
-      onClose={onClose}
-      submitting={submitting}
-      handleCreate={handleCreate}
+      handleClose={onClose}
     />
   );
 
@@ -110,7 +52,7 @@ export default function ExercisesDialog({ open, onClose }) {
         ModalProps={{ keepMounted: true }}
         PaperProps={{
           sx: {
-            height: "100%",
+            height: "10%",
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0,
           },
@@ -123,7 +65,7 @@ export default function ExercisesDialog({ open, onClose }) {
             </IconButton>
           </Box>
 
-          <Box sx={{ pt: 4, height: "100%", overflow: "auto" }}>{content}</Box>
+          <Box sx={{ pt: 4, height: "100%", overflow: "auto" }}>{formView}</Box>
         </Box>
       </SwipeableDrawer>
     );
@@ -131,8 +73,15 @@ export default function ExercisesDialog({ open, onClose }) {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Add New Exercise</DialogTitle>
-      <DialogContent dividers>{content}</DialogContent>
+      <DialogTitle>
+        {translate(mode === ADD_MODE ? "add_new_exercise" : "edit_exercise")}{" "}
+        <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+      </DialogTitle>
+      <DialogContent dividers>{formView}</DialogContent>
     </Dialog>
   );
 }
