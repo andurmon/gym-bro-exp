@@ -15,12 +15,26 @@ const ExerciseItem = ({ exercise }) => {
   });
 
   return (
-    <Grid item xs={12} sm={6} md={4} key={exercise.id}>
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      md={4}
+      key={exercise.id}
+      sx={{
+        flexShrink: 0, // Prevents MUI from squeezing your items
+        width: "3   00px", // Set a fixed or minimum width for each grid cell
+      }}
+    >
       <ExerciseCard>
         <CardContent>
           <ExerciseCardHeader>
             <Box>
-              <Typography variant="subtitle1" fontWeight={700}>
+              <Typography
+                variant="subtitle1"
+                fontWeight={700}
+                sx={{ whiteSpace: "wrap" }}
+              >
                 {translate(exercise?.key, exercise?.name)}
               </Typography>
               {/* <Typography variant="body2" color="text.secondary">

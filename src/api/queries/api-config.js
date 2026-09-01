@@ -8,7 +8,13 @@ const GYM_API_KEY = import.meta.env.VITE_GYM_API_KEY;
  * @param {*} data
  * @returns
  */
-export const getApiConfig = (method, domain, data = {}, params = {}) => {
+export const getApiConfig = (
+  method,
+  domain,
+  data = {},
+  params = {},
+  pathParams = "",
+) => {
   if (!domain) throw new Error("Domain not found");
   if (!GYM_BRO_SERVICE || !GYM_API_KEY) {
     console.error("Supabase environment variables are missing");
@@ -17,7 +23,7 @@ export const getApiConfig = (method, domain, data = {}, params = {}) => {
 
   return {
     method,
-    url: `${GYM_BRO_SERVICE}/${domain}`,
+    url: `${GYM_BRO_SERVICE}/${domain}/${pathParams}`,
     headers: {
       Authorization: `Bearer ${GYM_API_KEY}`,
       apikey: GYM_API_KEY,

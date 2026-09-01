@@ -17,6 +17,17 @@
   "equipment": "Equipment",
   "muscle-group": "Muscle Group",
 
+  "home_view": {
+    "description": "Plan your training and own your week.",
+    "create_routine": "Create Routine",
+    "this_week": "This Week"
+  },
+  "workout_card": {
+    "todays_routine": "Today's Routine",
+    "exercises": "Exercises",
+    "start_workout": "Start Workout",
+    "sets_reps": "sets × reps"
+  },
   "exercises_view": {
     "add_exercise": "Add Exercise",
     "description": "Browse exercises by muscle group, filter by equipment, and search the library.",
@@ -57,6 +68,14 @@
   "legs": "Legs",
   "shoulder": "Shoulder",
   "triceps": "Triceps",
+
+  "full_body": "Full Body",
+  "upper_body": "Upper Body",
+  "lower_body": "Lower Body",
+
+  "strength": "Strength",
+  "hypertrophy": "Hypertrophy",
+  "mobility": "Mobility",
 
   "exercises_library": {
     "flat_barbell_bench_press": "Barbell Bench Press",

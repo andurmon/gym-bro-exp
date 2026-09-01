@@ -27,7 +27,16 @@ const ExercisesGroupDisplay = ({ group, items }) => {
             </Box>
           </Stack>
 
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              display: "flex",
+              flexWrap: "nowrap", // Prevents items from wrapping to the next line
+              overflowX: "auto", // Enables horizontal scrolling
+              pb: 2, // Optional padding for the scrollbar
+            }}
+          >
             {items.map((exercise) => (
               <ExerciseItem key={exercise.id} exercise={exercise} />
             ))}

@@ -52,7 +52,7 @@ function WorkoutDialog({ mode, open, onClose, onCreate }) {
       open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="sm"
+      maxWidth="lg"
       TransitionComponent={Fade} //This is suposed to fix the Draggable behavior
     >
       <DialogTitle>
