@@ -20,7 +20,6 @@ const useFormConfig = ({ mode = null, onClose = () => {} }) => {
   };
 
   const handleCreate = async (payload) => {
-    console.log("SUBMIT WORKOUTS payload: ", payload);
     try {
       const result = await createWorkout(payload);
 

@@ -26,6 +26,19 @@
     "not_found_suggestion": "Intenta ajustar tu búsqueda o tus filtros para ver más resultados"
   },
 
+  "home_view": {
+    "description": "Planifica tu entrenamiento y sé dueño de tu semana.",
+    "create_routine": "Crear rutina",
+    "this_week": "Esta semana"
+  },
+
+  "workout_card": {
+    "todays_routine": "Rutina de hoy",
+    "exercises": "Ejercicios",
+    "start_workout": "Iniciar entrenamiento",
+    "sets_reps": "series × repeticiones"
+  },
+
   "workouts_view": {
     "create_workout": "Crear entrenamiento",
     "description": "Explora entrenamientos por grupo muscular, filtra por equipamiento y busca en la biblioteca.",

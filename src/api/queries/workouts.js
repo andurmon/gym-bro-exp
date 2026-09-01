@@ -3,6 +3,12 @@ import { getApiConfig } from "./api-config";
 
 const domain = "workouts";
 
+const getWorkout = async ({ id }) => {
+  const config = getApiConfig("get", domain, null, { expand: true }, id);
+
+  const response = await axios.request(config);
+  return response.data;
+};
 const listAllWorkouts = async () => {
   const config = getApiConfig("get", domain, null, { expand: true });
 
@@ -17,4 +23,4 @@ const createWorkout = async (data = {}) => {
   return response.data;
 };
 
-export { listAllWorkouts, createWorkout };
+export { getWorkout, listAllWorkouts, createWorkout };

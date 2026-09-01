@@ -15,6 +15,7 @@ const dialog = styled(MuiDialog)(() => ({
   "& .MuiPaper-root": {
     backgroundColor: "var(--bg)",
     borderRadius: "20px",
+    width: "100%",
   },
 }));
 
