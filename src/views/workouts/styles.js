@@ -60,15 +60,27 @@ export const TypeChip = styled(Chip)({
   textTransform: "capitalize",
 });
 
+export const ExercisesContainer = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  gap: "1rem",
+  overflowX: "auto",
+});
+
+export const ExerciseImg = styled("img")({
+  borderRadius: 8,
+  height: "100%",
+});
+
 export const ExerciseListItem = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   padding: theme.spacing(1, 0),
-  borderBottom: "1px solid var(--secondary, #3E5A72)",
-  "&:last-of-type": {
-    borderBottom: "none",
-  },
+
+  height: 100,
+  borderRadius: 8,
 }));
 
 export const AddExerciseRow = styled(Box)({

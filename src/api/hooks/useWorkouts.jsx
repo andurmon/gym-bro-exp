@@ -4,6 +4,14 @@ import * as workoutsAPI from "../queries/workouts";
 export const useworkouts = () => {
   const queryClient = useQueryClient();
 
+  const useGetWorkout = ({ id }) => {
+    const queryResult = useQuery({
+      queryKey: ["workouts", id],
+      queryFn: () => workoutsAPI.getWorkout({ id }),
+    });
+    const data = queryResult?.data;
+    return { ...queryResult, data };
+  };
   const useListAllWorkouts = () => {
     const queryResult = useQuery({
       queryKey: ["workouts"],
@@ -21,5 +29,5 @@ export const useworkouts = () => {
       },
     });
 
-  return { useListAllWorkouts, useCreateWorkout };
+  return { useGetWorkout, useListAllWorkouts, useCreateWorkout };
 };
