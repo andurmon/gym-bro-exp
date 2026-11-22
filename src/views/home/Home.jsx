@@ -28,8 +28,14 @@ import useBreakpoints from "../../hooks/useBreakpoints";
 import { useRoutines } from "../../api/hooks/useRoutines";
 import { useworkouts } from "../../api/hooks/useWorkouts";
 import { useTranslate } from "../../hooks/useTranslate";
-import { getCurrentWeekDateRange, week } from "./utils";
+import {
+  getCurrentDayIndex,
+  getCurrentDayName,
+  getCurrentWeekDateRange,
+  getWeek,
+} from "./utils";
 import WorkoutCard from "./components/workout-card/WorkoutCard";
+import { useState } from "react";
 
 // -----------------------------------------------------------------------------
 // Temporary data
@@ -38,15 +44,20 @@ import WorkoutCard from "./components/workout-card/WorkoutCard";
 const Workouts = () => {
   const { isSm } = useBreakpoints();
   const { language, translate } = useTranslate();
-  const { data: weekData, isLoading: isWeekDataLoading } =
-    useRoutines().useListAllRoutines();
-  console.log("weekData: ", weekData);
 
-  const { useGetWorkout } = useworkouts();
-  const { data: workoutData, isLoading: isWorkoutLoading } = useGetWorkout({
-    id: weekData?.[0]?.monday?.id,
+  const currentDayName = getCurrentDayName();
+  const [selectedDay, setSelectedDay] = useState(currentDayName);
+
+  const { useListAllRoutines } = useRoutines();
+  const { data: allRoutines, isLoading: isRoutinesLoading } =
+    useListAllRoutines();
+  const weekData = allRoutines?.[0] ?? {};
+  const week = getWeek(weekData);
+
+  const { useGetWorkout, useListAllWorkouts } = useworkouts();
+  const { data: workoutOfTheDay, isLoading: isWorkoutLoading } = useGetWorkout({
+    id: weekData?.[selectedDay]?.id,
   });
-  console.log("workoutData: ", workoutData);
 
   return (
     <PageContainer>
@@ -130,9 +141,10 @@ const Workouts = () => {
         {week.map((item, index) => (
           <DayCard
             key={item.day}
-            isWeekDataLoading={isWeekDataLoading}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            isWeekDataLoading={isRoutinesLoading}
             item={item}
-            isToday={index === 0}
             weekData={weekData}
           />
         ))}
@@ -142,7 +154,7 @@ const Workouts = () => {
 
       <WorkoutCard
         isWorkoutLoading={isWorkoutLoading}
-        workoutData={workoutData}
+        workoutData={workoutOfTheDay}
       />
     </PageContainer>
   );

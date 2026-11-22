@@ -26,40 +26,51 @@ export const getCurrentWeekDateRange = (language = "en-US") => {
 /**
  *
  */
-export const week = [
+export const getWeek = (weekData) => [
   {
     day: "monday",
     key: "MON",
-    workout: "Push",
+    workout: weekData?.[0]?.monday?.category ?? "Rest Day",
   },
   {
     day: "tuesday",
     key: "TUE",
-    workout: "Rest",
+    workout: weekData?.[0]?.tuesday?.category ?? "Rest Day",
   },
   {
     day: "wednesday",
     key: "WED",
-    workout: "Pull",
+    workout: weekData?.[0]?.wednesday?.category ?? "Rest Day",
   },
   {
     day: "thursday",
     key: "THU",
-    workout: "Rest",
+    workout: weekData?.[0]?.thursday?.category ?? "Rest Day",
   },
   {
     day: "friday",
     key: "FRI",
-    workout: "Legs",
+    workout: weekData?.[0]?.friday?.category ?? "Rest Day",
   },
   {
     day: "saturday",
     key: "SAT",
-    workout: "Rest",
+    workout: weekData?.[0]?.saturday?.category ?? "Rest Day",
   },
   {
     day: "sunday",
     key: "SUN",
-    workout: "Rest",
+    workout: weekData?.[0]?.sunday?.category ?? "Rest Day",
   },
 ];
+
+export const getCurrentDayIndex = () => {
+  const today = new Date();
+  return today.getDay(); // Returns 0 (Sunday) to 6 (Saturday)
+};
+
+export const getCurrentDayName = () => {
+  const today = new Date();
+  const options = { weekday: "long" };
+  return today.toLocaleDateString("en-EN", options).toLowerCase(); // Returns the full name of the day
+};
