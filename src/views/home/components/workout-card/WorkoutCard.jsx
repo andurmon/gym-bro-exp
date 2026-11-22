@@ -122,7 +122,10 @@ const WorkoutCard = ({ isWorkoutLoading = false, workoutData = {} }) => {
                               color: "var(--text)",
                             }}
                           >
-                            {translate(exercise.key) ?? exercise.name}
+                            {translate(
+                              `exercises_library.${exercise.key}`,
+                              exercise.name,
+                            )}
                           </Typography>
 
                           <Typography
